@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>dg_bolt</name>
+  <version>1.0.0</version>
+  <description>
+    Wrap the Bolt drivers into the dynamic-graph.
+  </description>
+  <author email="mnaveau@tue.mpg.de">Maximilien Naveau</author>
+  <maintainer email="mnaveau@tue.mpg.de">Maximilien Naveau</maintainer>
+  <license> BSD 3-Clause </license>
+  <buildtool_depend> catkin </buildtool_depend>
+
+  <depend> blmc_drivers </depend>
+  <depend> blmc_robots </depend>
+  <depend> yaml_cpp_catkin </depend>
+  <depend> dynamic_graph_manager </depend>
+  <depend> pinocchio_bullet </depend>
+
+  <depend> bolt </depend>
+  <depend> robot_properties_bolt </depend>
+
+  <!-- Generate messages and services -->
+  <depend> message_generation </depend>
+
+</package>
