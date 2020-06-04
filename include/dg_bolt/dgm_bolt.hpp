@@ -1,27 +1,27 @@
 /**
  * @file dgm_bolt.hpp
  * @author Manuel Wuthrich
- * @author Maximilien Naveau 
+ * @author Maximilien Naveau
  * @author Julian Viereck
- * @author Johannes Pfleging 
+ * @author Johannes Pfleging
  * @license License BSD-3-Clause
- * @copyright Copyright (c) 2019, New York University and Max Planck Gesellshaft.
+ * @copyright Copyright (c) 2019, New York University and Max Planck
+ * Gesellshaft.
  */
 
 #ifndef DGM_SOLO_HH
 #define DGM_SOLO_HH
 
-#include <dynamic_graph_manager/dynamic_graph_manager.hh>
 #include <bolt/bolt.hpp>
+#include <dynamic_graph_manager/dynamic_graph_manager.hh>
 #include "dg_bolt/JointCalibration.h"
 #include "yaml_cpp_catkin/yaml_cpp_fwd.hpp"
 
 namespace dg_bolt
 {
-
-  class DGMBolt : public dynamic_graph::DynamicGraphManager
-  {
-  public:
+class DGMBolt : public dynamic_graph::DynamicGraphManager
+{
+public:
     /**
      * @brief DemoSingleMotor is the constructor.
      */
@@ -62,7 +62,7 @@ namespace dg_bolt
      * @brief Ros callback for the callibration procedure. Warning the robot
      * will move to the next the joint index and back to "0" upon this call.
      * Be sure that no controller are running in parallel.
-     * 
+     *
      * @param req nothing
      * @param res True if everything went well.
      * @return true if everything went well.
@@ -72,10 +72,10 @@ namespace dg_bolt
         dg_bolt::JointCalibration::Request& req,
         dg_bolt::JointCalibration::Response& res);
 
-  private:
+private:
     /**
      * @brief Calibrate the robot joint position
-     * 
+     *
      * @param zero_to_index_angle is the angle between the theoretical zero and
      * the next positive angle.
      */
@@ -89,7 +89,7 @@ namespace dg_bolt
      * @brief test_bench_ the real test bench hardware drivers.
      */
     bolt::Bolt bolt_;
-    
+
     /**
      * @brief ctrl_joint_torques_ the joint torques to be sent. Used in this
      * class to perform a local copy of the control. This is need in order
@@ -108,9 +108,8 @@ namespace dg_bolt
      * the next jont index.
      */
     bolt::Vector6d zero_to_index_angle_from_file_;
-  };
+};
 
+}  // namespace dg_bolt
 
-} // namespace dg_bolt
-
-#endif // DGM_TEST_BENCH_8_MOTORS_HH
+#endif  // DGM_TEST_BENCH_8_MOTORS_HH
