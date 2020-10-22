@@ -9,13 +9,14 @@ class BoltBulletRobot(BoltBaseRobot):
                                               record_video, init_sliders_pose)
 
         self.q0[2] = 0.26487417
+        # self.q0[5] = -0.1736482
         self.q0[6] = 1.
         self.q0[7] = 0.0
-        self.q0[8] = -0.78539816
-        self.q0[9] = 1.57079633
+        self.q0[8] = 0.78539816
+        self.q0[9] = -1.57079633
         self.q0[10] = 0.0
-        self.q0[11] = -0.78539816
-        self.q0[12] = 1.57079633
+        self.q0[11] = 0.78539816
+        self.q0[12] = -1.57079633
 
         # Sync the current robot state to the graph input signals.
         self.sim2signal_()

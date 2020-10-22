@@ -51,7 +51,8 @@ class BoltBaseRobot(Robot):
         num_joints = p.getNumJoints(self.robotId)
         for ji in range(num_joints):
             p.changeDynamics(self.robotId, ji, linearDamping=.04,
-                angularDamping=0.04, restitution=0.0, lateralFriction=1.0, spinningFriction = 0.3)
+                angularDamping=0.04, restitution=0.0, lateralFriction=4.0, spinningFriction = 5.6)
+
         p.setGravity(0, 0, -9.81)
         p.setPhysicsEngineParameter(fixedTimeStep=1.0/1000.0, numSubSteps=1)
 
