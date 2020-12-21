@@ -8,7 +8,7 @@
  */
 
 #include "dg_bolt/dgm_bolt.hpp"
-#include "dynamic_graph_manager/ros_init.hpp"
+#include "dynamic_graph_manager/ros.hpp"
 
 namespace dg_bolt
 {
@@ -32,14 +32,18 @@ void DGMBolt::initialize_hardware_communication_process()
                         zero_to_index_angle_from_file_);
 
     // get the hardware communication ros node handle
-    ros::NodeHandle& ros_node_handle = dynamic_graph_manager::ros_init(
-        dynamic_graph_manager::DynamicGraphManager::hw_com_ros_node_name_);
+    dynamic_graph_manager::RosNodePtr ros_node_handle =
+        dynamic_graph_manager::get_ros_node(
+            dynamic_graph_manager::HWC_ROS_NODE_NAME);
 
     /** initialize the user commands */
-    ros_user_commands_.push_back(ros_node_handle.advertiseService(
-        "calibrate_joint_position",
-        &DGMBolt::calibrate_joint_position_callback,
-        this));
+    ros_user_commands_.push_back(
+        ros_node_handle->create_service<mim_msgs::srv::JointCalibration>(
+            "calibrate_joint_position",
+            std::bind(&DGMBolt::calibrate_joint_position_callback,
+                      this,
+                      std::placeholders::_1,
+                      std::placeholders::_2)));
 
     std::string network_id;
     YAML::ReadParameter(
@@ -53,8 +57,8 @@ void DGMBolt::get_sensors_to_map(dynamic_graph_manager::VectorDGMap& map)
     bolt_.acquire_sensors();
 
     /**
-      * Joint data
-      */
+     * Joint data
+     */
     map.at("joint_positions") = bolt_.get_joint_positions();
     map.at("joint_velocities") = bolt_.get_joint_velocities();
     map.at("joint_torques") = bolt_.get_joint_torques();
@@ -62,8 +66,8 @@ void DGMBolt::get_sensors_to_map(dynamic_graph_manager::VectorDGMap& map)
     map.at("joint_encoder_index") = bolt_.get_joint_encoder_index();
 
     /**
-      * Additional data
-      */
+     * Additional data
+     */
     map.at("base_accelerometer") = bolt_.get_base_accelerometer();
     map.at("base_gyroscope") = bolt_.get_base_gyroscope();
     map.at("base_attitude") = bolt_.get_base_attitude();
@@ -100,7 +104,8 @@ void DGMBolt::get_sensors_to_map(dynamic_graph_manager::VectorDGMap& map)
     }
 }
 
-void DGMBolt::set_motor_controls_from_map(const dynamic_graph_manager::VectorDGMap& map)
+void DGMBolt::set_motor_controls_from_map(
+    const dynamic_graph_manager::VectorDGMap& map)
 {
     try
     {
@@ -119,9 +124,9 @@ void DGMBolt::set_motor_controls_from_map(const dynamic_graph_manager::VectorDGM
     }
 }
 
-bool DGMBolt::calibrate_joint_position_callback(
-    dg_bolt::JointCalibration::Request& req,
-    dg_bolt::JointCalibration::Response& res)
+void DGMBolt::calibrate_joint_position_callback(
+    mim_msgs::srv::JointCalibration::Request::SharedPtr req,
+    mim_msgs::srv::JointCalibration::Response::SharedPtr res)
 {
     // parse and register the command for further call.
     add_user_command(std::bind(&DGMBolt::calibrate_joint_position,
@@ -129,10 +134,7 @@ bool DGMBolt::calibrate_joint_position_callback(
                                zero_to_index_angle_from_file_));
 
     // return whatever the user want
-    res.sanity_check = true;
-
-    // the service has been executed properly
-    return true;
+    res->sanity_check = true;
 }
 
 void DGMBolt::calibrate_joint_position(

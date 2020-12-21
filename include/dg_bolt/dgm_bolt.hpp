@@ -14,8 +14,8 @@
 
 #include "bolt/bolt.hpp"
 #include "dynamic_graph_manager/dynamic_graph_manager.hpp"
-#include "dg_bolt/JointCalibration.h"
-#include "yaml_cpp_catkin/yaml_cpp_fwd.hpp"
+#include "mim_msgs/srv/joint_calibration.hpp"
+#include "yaml_utils/yaml_cpp_fwd.hpp"
 
 namespace dg_bolt
 {
@@ -56,7 +56,8 @@ public:
      * controls and send these controls to the hardware.
      * @param map
      */
-    void set_motor_controls_from_map(const dynamic_graph_manager::VectorDGMap& map);
+    void set_motor_controls_from_map(
+        const dynamic_graph_manager::VectorDGMap& map);
 
     /**
      * @brief Ros callback for the callibration procedure. Warning the robot
@@ -68,9 +69,9 @@ public:
      * @return true if everything went well.
      * @return false if something went wrong.
      */
-    bool calibrate_joint_position_callback(
-        dg_bolt::JointCalibration::Request& req,
-        dg_bolt::JointCalibration::Response& res);
+    void calibrate_joint_position_callback(
+        mim_msgs::srv::JointCalibration::Request::SharedPtr req,
+        mim_msgs::srv::JointCalibration::Response::SharedPtr res);
 
 private:
     /**
