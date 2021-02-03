@@ -35,19 +35,26 @@ find_package(blmc_robots REQUIRED)
 find_package(dynamic_graph_manager REQUIRED)
 find_package(yaml_utils REQUIRED)
 find_package(bolt REQUIRED)
+find_package(PythonModules REQUIRED COMPONENTS robot_properties_bolt)
 
 ############################
 # Search for dependencies. #
 ############################
-set(CATKIN_PKGS ${CATKIN_PKGS}
-  blmc_drivers
-  blmc_robots
-  dynamic_graph_manager
-  yaml_utils
-  pinocchio_bullet
-  bolt
-  robot_properties_bolt
-)
+
+# Export de dependencies.
+ament_export_dependencies(
+        ament_cmake
+        ament_cmake_python
+        mpi_cmake_modules
+        mim_msgs
+        ament_index_cpp
+        blmc_drivers
+        blmc_robots
+        dynamic_graph_manager
+        yaml_utils
+        pinocchio_bullet
+        bolt
+        robot_properties_bolt)
 
 
 # Prepare the final export.
@@ -66,14 +73,14 @@ add_subdirectory(src)
 #
 # Manage the unit tests.
 #
-#if(BUILD_TESTING)
-#  add_subdirectory(tests)
-#endif()
+if(BUILD_TESTING)
+  add_subdirectory(tests)
+endif()
 #
 ##
 ## Manage the demos.
 ##
-#add_subdirectory(demos)
+add_subdirectory(demos)
 
 #
 # Install the package includes.

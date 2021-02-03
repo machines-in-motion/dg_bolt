@@ -13,14 +13,8 @@
 int main(int, char* [])
 {
     // Get the dynamic_graph_manager config file.
-    std::string share_path = ament_index_cpp::get_package_share_directory(
-        ROBOT_PROPERTIES_PACKAGE_NAME);
-    std::string yaml_path = share_path + "/" + ROBOT_PROPERTIES_YAML_PATH;
-    std::string yaml_path =
-        "/home/edaneshmand/devel_ros2/workspace/src/robot_properties_bolt/src/"
-        "robot_properties_bolt/robot_properties_bolt/dynamic_graph_manager/"
-        "dgm_parameters_bolt.yaml";
-    std::cout << "Loading paramters from " << yaml_path << std::endl;
+    std::cout << "Loading parameters from " << ROBOT_PROPERTIES_PACKAGE_NAME << std::endl;
+    std::string yaml_path =ROBOT_PROPERTIES_YAML_PATH;
     YAML::Node param = YAML::LoadFile(yaml_path);
     // Create the dgm.
     dg_bolt::DGMBolt dgm;

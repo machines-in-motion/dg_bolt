@@ -10,7 +10,7 @@ set(robot_properties_package_name
         robot_properties_bolt)
 
 set(dynamic_graph_manager_yaml_file
-        dynamic_graph_manager/dgm_parameters_bolt.yaml)
+        ${PythonModules_robot_properties_bolt_PATH}/robot_properties_bolt/robot_properties_bolt/dynamic_graph_manager/dgm_parameters_bolt.yaml)
 
 
 # create library
