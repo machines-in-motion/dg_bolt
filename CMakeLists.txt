@@ -37,25 +37,24 @@ find_package(yaml_utils REQUIRED)
 find_package(bolt REQUIRED)
 find_package(PythonModules REQUIRED COMPONENTS robot_properties_bolt)
 
-############################
+# ##############################################################################
 # Search for dependencies. #
-############################
+# ##############################################################################
 
 # Export de dependencies.
 ament_export_dependencies(
-        ament_cmake
-        ament_cmake_python
-        mpi_cmake_modules
-        mim_msgs
-        ament_index_cpp
-        blmc_drivers
-        blmc_robots
-        dynamic_graph_manager
-        yaml_utils
-        pinocchio_bullet
-        bolt
-        robot_properties_bolt)
-
+  ament_cmake
+  ament_cmake_python
+  mpi_cmake_modules
+  mim_msgs
+  ament_index_cpp
+  blmc_drivers
+  blmc_robots
+  dynamic_graph_manager
+  yaml_utils
+  pinocchio_bullet
+  bolt
+  robot_properties_bolt)
 
 # Prepare the final export.
 ament_export_interfaces(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
@@ -77,9 +76,8 @@ if(BUILD_TESTING)
   add_subdirectory(tests)
 endif()
 #
-##
-## Manage the demos.
-##
+# Manage the demos.
+#
 add_subdirectory(demos)
 
 #
@@ -96,4 +94,3 @@ add_documentation()
 # Export as an ament_package
 #
 ament_package()
-

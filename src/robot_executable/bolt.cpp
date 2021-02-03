@@ -13,8 +13,9 @@
 int main(int, char* [])
 {
     // Get the dynamic_graph_manager config file.
-    std::cout << "Loading parameters from " << ROBOT_PROPERTIES_PACKAGE_NAME << std::endl;
-    std::string yaml_path =ROBOT_PROPERTIES_YAML_PATH;
+    std::cout << "Loading parameters from " << ROBOT_PROPERTIES_PACKAGE_NAME
+              << std::endl;
+    std::string yaml_path = ROBOT_PROPERTIES_YAML_PATH;
     YAML::Node param = YAML::LoadFile(yaml_path);
     // Create the dgm.
     dg_bolt::DGMBolt dgm;
